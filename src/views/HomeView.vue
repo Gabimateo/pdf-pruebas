@@ -1,18 +1,13 @@
 <template>
   <div class="home">
-    <PdfTron msg="Welcome to Your Vue.js App"/>
+    <PdfTron :pdfFile="pdfFile"/>
   </div>
 </template>
 
-<script>
+<script setup>
 /* eslint-disable */
+import {ref} from 'vue';
 import PdfTron from '@/components/PdfTron.vue';
 
-export default {
-  name: 'HomeView',
-  components: {
-    PdfTron,
-    
-  }
-}
+const pdfFile = ref("/document-2.pdf");
 </script>
