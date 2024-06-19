@@ -5,9 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "copyfiles -u 2 \"node_modules/@pdftron/webviewer/public/**\" \"public/webviewer\""
   },
   "dependencies": {
+    "@pdftron/webviewer": "^10.10.1",
+    "pspdfkit": "^2024.3.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
@@ -15,6 +18,7 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.32.7",
