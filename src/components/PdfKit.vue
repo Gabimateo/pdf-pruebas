@@ -15,16 +15,13 @@ const props = defineProps({
 });
 
 const pdfContainer = ref(null);
-const { emit } = defineEmits(['loaded']); // Define el evento personalizado 'loaded'
+const emit = defineEmits(['loaded']);
 
 onMounted(() => {
-  pdfContainer.value = document.querySelector('.pdf-container'); // Actualiza la referencia al elemento
-
-  // Espera a que el contenedor esté disponible
+  pdfContainer.value = document.querySelector('.pdf-container'); 
   if (pdfContainer.value) {
     loadPSPDFKit().then((instance) => {
-      emit("loaded", instance); // Llama al evento 'loaded' con la instancia de PSPDFKit
-    }).catch(error => {
+      emit("loaded", instance); }).catch(error => {
       console.error('Error loading PSPDFKit:', error);
     });
   } else {
@@ -44,10 +41,9 @@ const loadPSPDFKit = async () => {
     return;
   }
 
-  // Después de verificar que el contenedor esté disponible, carga PSPDFKit
   PSPDFKit.unload(".pdf-container");
   return PSPDFKit.load({
-    document: props.pdfFile, // Utiliza la propiedad `document` para cargar el PDF
+    document: props.pdfFile, 
     container: pdfContainer.value,
   });
 };
@@ -57,32 +53,29 @@ const addAnnotation = async () => {
     container: '.pdf-container',
   });
 
-  // Obtener el manager de anotaciones
   const annotationManager = instance.annotationManager;
 
-  // Crear una nueva anotación de texto libre
+  
   const annotation = new PSPDFKit.Annotations.FreeTextAnnotation({
-    pageIndex: 0, // Página en la que deseas añadir la anotación (indexada desde 0)
-    contents: "Texto de la anotación", // Contenido de la anotación
-    boundingBox: new PSPDFKit.Geometry.Rect({ // Definir la posición y tamaño de la anotación
+    pageIndex: 0, 
+    contents: "Texto de la anotación", 
+    boundingBox: new PSPDFKit.Geometry.Rect({ 
       left: 100,
       top: 100,
       width: 200,
       height: 50
     }),
-    fontSize: 12, // Tamaño de la fuente
-    fontColor: new PSPDFKit.Color({ // Color del texto
-      rgb: [0, 0, 0] // Negro
+    fontSize: 12, 
+    fontColor: new PSPDFKit.Color({ 
+      rgb: [0, 0, 0] 
     }),
-    backgroundColor: new PSPDFKit.Color({ // Color de fondo de la anotación
-      rgb: [255, 255, 255, 0.5] // Blanco con transparencia al 50%
+    backgroundColor: new PSPDFKit.Color({ 
+      rgb: [255, 255, 255, 0.5] 
     })
   });
 
-  // Añadir la anotación al documento
   annotationManager.addAnnotation(annotation);
 
-  // Guardar los cambios (opcional, dependiendo de tu flujo de trabajo)
   await instance.saveAnnotations();
 };
 

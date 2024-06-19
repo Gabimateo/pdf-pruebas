@@ -16,7 +16,6 @@ const pdfFile = ref("/document.pdf");
 
 const handleLoaded = (instance) => {
   console.log("PSPDFKit has loaded: ", instance);
-  // Do something.
 };
 
 const openDocument = (event) => {
